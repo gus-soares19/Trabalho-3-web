@@ -13,13 +13,17 @@ public class PedidoService {
 
 	@Autowired
 	private PedidoRepository repo;
-	
-	public List<Pedido> findAll(){
+
+	public List<Pedido> findAll() {
 		return repo.findAll();
 	}
-	
+
 	public Optional<Pedido> findById(Integer id) {
 		return repo.findById(id);
 	}
-	
+
+	public void delete(Integer id) {
+		repo.deleteById(id);
+	}
+
 }
