@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.o7planning.dto.PedidoDTO;
+
 @Entity
 public class Pedido implements Serializable {
 
@@ -32,6 +34,10 @@ public class Pedido implements Serializable {
 
 	public Pedido(Date data) {
 		this.setData(data);
+	}
+
+	public Pedido(PedidoDTO pedidoDTO) {
+		this.setData(pedidoDTO.getData());
 	}
 
 	public Integer getId() {
@@ -66,7 +72,6 @@ public class Pedido implements Serializable {
 		this.user = user;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

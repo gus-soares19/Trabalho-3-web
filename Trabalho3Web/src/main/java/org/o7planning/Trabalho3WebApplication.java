@@ -60,14 +60,14 @@ public class Trabalho3WebApplication implements CommandLineRunner {
 			ItemPedido item1 = new ItemPedido();
 			item1.setPedido(pedido);
 			item1.setProduto(p1);
-			item1.setPreco(p1.getPreco());
 			item1.setQuantidade(1.0);
+			item1.setPreco(p1.getPreco());
 
 			ItemPedido item2 = new ItemPedido();
 			item2.setPedido(pedido);
 			item2.setProduto(p2);
-			item2.setPreco(p2.getPreco());
 			item2.setQuantidade(1.0);
+			item2.setPreco(p2.getPreco());
 
 			pedido.setItensPedido(Arrays.asList(item1, item2));
 			p1.getItens().add(item1);

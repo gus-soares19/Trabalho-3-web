@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,6 +22,8 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 3, max = 120, message = "O tamanho deve ser entre 3 e 120 caracteres")
 	private String nome;
 	private String endereco;
 	private String telefone;
@@ -57,6 +62,9 @@ public class User implements Serializable {
 	}
 
 	public void setEndereco(String endereco) {
+		if (endereco.isBlank()) {
+			throw new IllegalArgumentException("campo vazio");
+		}
 		this.endereco = endereco;
 	}
 
