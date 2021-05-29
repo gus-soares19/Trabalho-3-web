@@ -18,6 +18,14 @@ public class ProdutoService {
 		return repo.findAll();
 	}
 
+	public List<Produto> findAllByPriceLessThanEqual(Double preco) {
+		return repo.findAllByPrecoLessThanEqual(preco);
+	}
+
+	public List<Produto> findAllByNomeContaining(String nome) {
+		return repo.findAllByNomeContaining(nome);
+	}
+
 	public Produto findById(Integer id) {
 		Optional<Produto> produto = repo.findById(id);
 		return produto.orElseThrow(() -> new RuntimeException("produto não encontrado."));

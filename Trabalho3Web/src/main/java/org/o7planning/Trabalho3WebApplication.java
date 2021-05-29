@@ -7,6 +7,7 @@ import org.o7planning.model.ItemPedido;
 import org.o7planning.model.Pedido;
 import org.o7planning.model.Produto;
 import org.o7planning.model.User;
+import org.o7planning.model.enums.Perfil;
 import org.o7planning.repository.ItemPedidoRepository;
 import org.o7planning.repository.PedidoRepository;
 import org.o7planning.repository.ProdutoRepository;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class Trabalho3WebApplication implements CommandLineRunner {
@@ -31,6 +33,9 @@ public class Trabalho3WebApplication implements CommandLineRunner {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+
 	public static void main(String[] args) {
 		SpringApplication.run(Trabalho3WebApplication.class, args);
 	}
@@ -42,6 +47,8 @@ public class Trabalho3WebApplication implements CommandLineRunner {
 
 			User user = new User();
 			user.setNome("Gustavo Soares");
+			user.setSenha(passwordEncoder.encode("123456789"));
+			user.addPerfil(Perfil.ADMIN);
 
 			user = userRepository.save(user);
 
@@ -61,13 +68,13 @@ public class Trabalho3WebApplication implements CommandLineRunner {
 			item1.setPedido(pedido);
 			item1.setProduto(p1);
 			item1.setQuantidade(1.0);
-			item1.setPreco(p1.getPreco());
+			item1.setPrecoTotal(p1.getPreco());
 
 			ItemPedido item2 = new ItemPedido();
 			item2.setPedido(pedido);
 			item2.setProduto(p2);
 			item2.setQuantidade(1.0);
-			item2.setPreco(p2.getPreco());
+			item2.setPrecoTotal(p2.getPreco());
 
 			pedido.setItensPedido(Arrays.asList(item1, item2));
 			p1.getItens().add(item1);

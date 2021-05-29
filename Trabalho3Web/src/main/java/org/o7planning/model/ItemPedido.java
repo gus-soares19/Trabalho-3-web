@@ -25,7 +25,7 @@ public class ItemPedido implements Serializable {
 
 	public ItemPedido(Pedido pedido, Produto produto, Double quantidade, Double preco) {
 		this.setQuantidade(quantidade);
-		this.setPreco(preco);
+		this.setPrecoTotal(preco);
 	}
 
 	public ItemPedido(ItemPedidoDTO itemPedidoDTO) {
@@ -48,11 +48,11 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public Double getPreco() {
+	public Double getPrecoTotal() {
 		return precoTotal;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPrecoTotal(Double preco) {
 		this.precoTotal = preco * this.getQuantidade();
 	}
 

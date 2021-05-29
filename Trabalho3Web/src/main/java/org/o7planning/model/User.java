@@ -2,9 +2,15 @@ package org.o7planning.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
+import org.o7planning.model.enums.Perfil;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,16 +36,23 @@ public class User implements Serializable {
 	private String telefone;
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
-	private List<Pedido> historico = new ArrayList<Pedido>();
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "perfis")
+	private Set<Integer> perfis = new HashSet<Integer>();
+	@JsonIgnore
+	private String senha;
 
 	public User() {
-
+		this.addPerfil(Perfil.CLIENT);
 	}
 
-	public User(String nome, String endereco, String telefone) {
+	public User(String nome, String endereco, String telefone, String senha) {
 		this.setNome(nome);
 		this.setEndereco(endereco);
 		this.setTelefone(telefone);
+		this.setSenha(senha);
+		this.addPerfil(Perfil.CLIENT);
 	}
 
 	public Integer getId() {
@@ -76,12 +90,28 @@ public class User implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public List<Pedido> getHistorico() {
-		return historico;
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
-	public void setHistorico(List<Pedido> historico) {
-		this.historico = historico;
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCodigo());
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
