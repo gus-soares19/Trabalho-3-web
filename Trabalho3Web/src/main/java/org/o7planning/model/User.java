@@ -68,6 +68,9 @@ public class User implements Serializable {
 	}
 
 	public void setNome(String nome) {
+		if (nome.isBlank()) {
+			throw new IllegalArgumentException("ERRO 406 - Nome do usuário inválido.");
+		}
 		this.nome = nome;
 	}
 
@@ -77,7 +80,7 @@ public class User implements Serializable {
 
 	public void setEndereco(String endereco) {
 		if (endereco.isBlank()) {
-			throw new IllegalArgumentException("campo vazio");
+			throw new IllegalArgumentException("ERRO 406 -Endereço do usuário inválido.");
 		}
 		this.endereco = endereco;
 	}
@@ -87,6 +90,9 @@ public class User implements Serializable {
 	}
 
 	public void setTelefone(String telefone) {
+		if (nome.isBlank()) {
+			throw new IllegalArgumentException("ERRO 406 -Telefone do usuário inválido");
+		}
 		this.telefone = telefone;
 	}
 
@@ -111,6 +117,9 @@ public class User implements Serializable {
 	}
 
 	public void setSenha(String senha) {
+		if (senha.isBlank()) {
+			throw new IllegalArgumentException("ERRO 406 -Senha inválida.");
+		}
 		this.senha = senha;
 	}
 

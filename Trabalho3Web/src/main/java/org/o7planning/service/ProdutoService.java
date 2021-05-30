@@ -14,6 +14,9 @@ public class ProdutoService {
 	@Autowired
 	private ProdutoRepository repo;
 
+	@Autowired
+	private UserService userService;
+
 	public List<Produto> findAll() {
 		return repo.findAll();
 	}
@@ -36,10 +39,12 @@ public class ProdutoService {
 	}
 
 	public Produto create(Produto produto) {
+		userService.getUserAutenticado();
 		return repo.save(produto);
 	}
 
 	public Produto update(Integer id, Produto produto) {
+		userService.getUserAutenticado();
 		Produto produtoEncontrado = this.findById(id);
 
 		if (produtoEncontrado == null) {

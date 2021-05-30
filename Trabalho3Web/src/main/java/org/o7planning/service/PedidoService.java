@@ -13,7 +13,6 @@ import org.o7planning.model.User;
 import org.o7planning.model.enums.Perfil;
 import org.o7planning.repository.ItemPedidoRepository;
 import org.o7planning.repository.PedidoRepository;
-import org.o7planning.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,20 +36,14 @@ public class PedidoService {
 
 	public List<Pedido> findAll() {
 
-		UserSS user = UserService.autenticado();
-
-		if (user == null) {
-			throw new NullPointerException("usuário não autenticado");
-		}
-
-		User u = userService.findById(user.getId());
+		User user = userService.getUserAutenticado();
 
 		List<Pedido> pedidos;
-		if (u.getPerfis().contains(Perfil.ADMIN)) {
+		if (user.getPerfis().contains(Perfil.ADMIN)) {
 			pedidos = pedidoRepo.findAll();
 		} else {
 			pedidos = new ArrayList<Pedido>();
-			for (Pedido pedido : u.getPedidos()) {
+			for (Pedido pedido : user.getPedidos()) {
 				pedidos.add(findById(pedido.getId()));
 			}
 		}
@@ -59,19 +52,19 @@ public class PedidoService {
 
 	public Pedido findById(Integer id) {
 		Optional<Pedido> pedido = pedidoRepo.findById(id);
-		return pedido.orElseThrow(() -> new RuntimeException("pedido não encontrado."));
+		return pedido.orElseThrow(() -> new NullPointerException("ERRO 404 - pedido não encontrado."));
 	}
 
 	public void deleteById(Integer id) {
 		Pedido pedido = findById(id);
 
 		itemPedidoRepo.deleteAll(pedido.getItensPedido());
-
 		pedidoRepo.deleteById(id);
 	}
 
 	public Pedido create(PedidoDTO pedidoDTO) {
-		User user = userService.findById(pedidoDTO.getUserId());
+//		User user = userService.findById(pedidoDTO.getUserId());
+		User user = userService.getUserAutenticado();
 		Pedido pedido = new Pedido(pedidoDTO);
 
 		pedido.setUser(user);
@@ -94,7 +87,8 @@ public class PedidoService {
 	public Pedido update(Integer id, PedidoDTO pedidoDTO) {
 
 		Pedido pedido = this.findById(id);
-		User user = userService.findById(pedidoDTO.getUserId());
+//		User user = userService.findById(pedidoDTO.getUserId());
+		User user = userService.getUserAutenticado();
 
 		pedido.setUser(user);
 		pedido.setData(pedidoDTO.getData());

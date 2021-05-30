@@ -47,6 +47,9 @@ public class Produto implements Serializable {
 	}
 
 	public void setNome(String nome) {
+		if (nome.isBlank()) {
+			throw new IllegalArgumentException("ERRO 406 -Nome do produto inválido.");
+		}
 		this.nome = nome;
 	}
 
@@ -55,9 +58,12 @@ public class Produto implements Serializable {
 	}
 
 	public void setPreco(Double preco) {
+		if (preco <= 0) {
+			throw new IllegalArgumentException("ERRO 406 -Preço do produto inválido.");
+		}
 		this.preco = preco;
 	}
-	
+
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}

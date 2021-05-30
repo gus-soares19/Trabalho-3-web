@@ -16,12 +16,12 @@ public class UserDetailsImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String nome) throws UsernameNotFoundException {
-		User cli = userService.findByNome(nome);
+		User user = userService.findByNome(nome);
 
-		if (cli == null)
+		if (user == null)
 			throw new UsernameNotFoundException("Usuário \"" + nome + "\" inválido");
 
-		return new UserSS(cli.getId(), cli.getNome(), cli.getSenha(), cli.getPerfis());
+		return new UserSS(user.getId(), user.getNome(), user.getSenha(), user.getPerfis());
 	}
 
 }

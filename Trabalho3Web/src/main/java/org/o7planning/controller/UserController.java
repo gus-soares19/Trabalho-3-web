@@ -39,6 +39,12 @@ public class UserController {
 		User user = service.findById(id);
 		return ResponseEntity.ok(user);
 	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping(value = "/findUser")
+	public User findByNome(@PathVariable String nome) {
+		return service.findByNome(nome);
+	}
 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")

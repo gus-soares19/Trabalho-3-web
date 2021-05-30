@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class Trabalho3WebApplication implements CommandLineRunner {
@@ -33,9 +32,6 @@ public class Trabalho3WebApplication implements CommandLineRunner {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
-	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
-
 	public static void main(String[] args) {
 		SpringApplication.run(Trabalho3WebApplication.class, args);
 	}
@@ -47,7 +43,7 @@ public class Trabalho3WebApplication implements CommandLineRunner {
 
 			User user = new User();
 			user.setNome("Gustavo Soares");
-			user.setSenha(passwordEncoder.encode("123456789"));
+			user.setSenha("123456789");
 			user.addPerfil(Perfil.ADMIN);
 
 			user = userRepository.save(user);
