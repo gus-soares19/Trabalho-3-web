@@ -71,7 +71,7 @@ public class FiltroAutenticacaoJWT extends UsernamePasswordAuthenticationFilter 
 		private String json() {
 			long date = new Date().getTime();
 			return "{\"timestamp\": " + date + ", " + "\"status\": 401, " + "\"error\": \"Não autorizado\", "
-					+ "\"message\": \"Email ou senha inválidos\", " + "\"path\": \"/login\"}";
+					+ "\"message\": \"usuário ou senha inválidos\", " + "\"path\": \"/login\"}";
 		}
 	}
 }

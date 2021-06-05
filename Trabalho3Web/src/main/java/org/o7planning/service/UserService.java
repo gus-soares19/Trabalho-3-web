@@ -44,7 +44,6 @@ public class UserService {
 
 	public User update(Integer id, User user) {
 		User userEncontrado = getUserAutenticado();
-//		User userEncontrado = this.findById(id);
 
 		user.setId(userEncontrado.getId());
 
