@@ -31,8 +31,6 @@ public class PedidoService {
 	@Autowired
 	private ProdutoService produtoService;
 
-	@Autowired
-	private ItemPedidoRepository itemPedidoRepository;
 
 	public List<Pedido> findAll() {
 
@@ -63,7 +61,6 @@ public class PedidoService {
 	}
 
 	public Pedido create(PedidoDTO pedidoDTO) {
-//		User user = userService.findById(pedidoDTO.getUserId());
 		User user = userService.getUserAutenticado();
 		Pedido pedido = new Pedido(pedidoDTO);
 
@@ -78,7 +75,7 @@ public class PedidoService {
 			itemPedido.setProduto(produto);
 			itemPedido.setPedido(pedido);
 			itemPedido.setPrecoTotal(produto.getPreco());
-			itemPedidoRepository.save(itemPedido);
+			itemPedidoRepo.save(itemPedido);
 		}
 
 		return pedido;
@@ -87,7 +84,6 @@ public class PedidoService {
 	public Pedido update(Integer id, PedidoDTO pedidoDTO) {
 
 		Pedido pedido = this.findById(id);
-//		User user = userService.findById(pedidoDTO.getUserId());
 		User user = userService.getUserAutenticado();
 
 		pedido.setUser(user);
@@ -96,7 +92,7 @@ public class PedidoService {
 		ItemPedido itemPedido = null;
 		Produto produto = null;
 
-		itemPedidoRepository.deleteAll(pedido.getItensPedido());
+		itemPedidoRepo.deleteAll(pedido.getItensPedido());
 
 		for (ItemPedidoDTO itemPedidoDTO : pedidoDTO.getItensPedido()) {
 			produto = produtoService.findById(itemPedidoDTO.getProdutoId());
@@ -104,7 +100,7 @@ public class PedidoService {
 			itemPedido.setProduto(produto);
 			itemPedido.setPedido(pedido);
 			itemPedido.setPrecoTotal(produto.getPreco());
-			itemPedidoRepository.save(itemPedido);
+			itemPedidoRepo.save(itemPedido);
 		}
 
 		return pedido;
