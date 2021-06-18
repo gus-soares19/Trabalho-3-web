@@ -49,6 +49,7 @@ public class Trabalho3WebApplication implements CommandLineRunner {
 			user.setNome("Gustavo Soares");
 			user.setSenha(bCryptPasswordEncoder.encode("123456789"));
 			user.addPerfil(Perfil.ADMIN);
+			
 
 			user = userRepository.save(user);
 
